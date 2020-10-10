@@ -18,9 +18,10 @@ apt install apache2-utils
 mkdir -p /root/Playground/management && \
   cd /root/Playground/management && \
   htpasswd -cB .htpasswd traefik
-touch acme.json && chmod 660 acme.json
+touch acme.json && chmod 600 acme.json
 docker network create -d overlay traefik
 curl -LJ --remote-name-all https://raw.github.com/DistilleryTech/playground/main/management/{management.yml,traefik.toml}
 
-read -p 'Your private network IP: ' privateip
+ip a | grep 'inet\ '
+read -p 'Input your private network IP: ' privateip
 docker swarm init  --advertise-addr $privateip

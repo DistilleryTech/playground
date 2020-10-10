@@ -93,7 +93,7 @@ curl -LJ --remote-name-all https://raw.github.com/DistilleryTech/playground/main
 8. Create acme.json
 
 ```
-touch acme.json && chmod 660 acme.json
+touch acme.json && chmod 600 acme.json
 ```
 
 ## Setup management stack
