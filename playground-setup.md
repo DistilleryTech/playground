@@ -2,7 +2,15 @@
 
 Get a VDS with lastest Ubuntu installed. This doc was tested on Ubuntu Server 20.04
 
-## Install Docker Swarm
+## Install Docker Swarm (Automatic)
+
+```
+curl -LJO https://raw.github.com/DistilleryTech/playground/main/management/init.sh && \
+  chmod ./init.sh && \
+  ./init.sh
+```
+
+## Install Docker Swarm (Manual)
 
 0. Go Root
 
@@ -79,10 +87,18 @@ docker network create -d overlay traefik
 7. Download configuration
 
 ```
-curl -LJO https://raw.github.com/DistilleryTech/playground/main/management/{management.yml,traefik.toml}
+curl -LJ --remote-name-all https://raw.github.com/DistilleryTech/playground/main/management/{management.yml,traefik.toml}
 ```
 
-8. Update configuration
+8. Create acme.json
+
+```
+touch acme.json && chmod 660 acme.json
+```
+
+## Setup management stack
+
+1. Update configuration
 
 Replace in management.yml
 
@@ -92,7 +108,7 @@ Replace in traefik.toml
 
 - your-name@distillery.com with your email. You will get notifications about Let's encrypt certificates on this address
 
-9. Deploy management stack
+2. Deploy management stack
 
 ```
 docker stack deploy --compose-file management.yml --prune  management
