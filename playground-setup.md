@@ -1,21 +1,29 @@
 # How to setup Playground
 
+Get a VDS with lastest Ubuntu installed. This doc was tested on Ubuntu Server 20.04
+
 ## Install Docker Swarm
+
+0. Go Root
+
+```
+sudo su
+```
 
 1. Uninstall existing Docker
 
 ```bash
-sudo apt-get remove docker docker-engine docker.io containerd runc
+apt-get remove docker docker-engine docker.io containerd runc
 ```
 
 2. Install Docker
 
 ```bash
-sudo apt-get update
+apt-get update
 ```
 
 ```bash
-sudo apt-get install \
+apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -28,22 +36,44 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 ```
 
 ```
-sudo add-apt-repository \
+add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
    stable"
 ```
 
 ```
-sudo apt-get update
+apt-get update
 ```
 
 ```
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
 3. Init Docker Swarm
 
 ```
-docker swarm init  --advertise-addr <INTERNAL_IP>
+docker swarm init  --advertise-addr <INTERNAL_NETWORK_IP>
 ```
+
+4. Install htpasswd
+
+```
+apt install apache2-utils
+```
+
+5. Create password for "traefik" user
+
+```
+mkdir -p /root/Playground/management && \
+  cd /root/Playground/management && \
+  htpasswd -cB .htpasswd traefik
+```
+
+6. Create overlay network
+
+```
+docker network create -d overlay traefik
+```
+
+7. Download configuration

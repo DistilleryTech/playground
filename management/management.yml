@@ -1,0 +1,43 @@
+version: '3.2'
+services:
+
+  reverse-proxy:
+    image: traefik:1.7.20 # The official Traefik docker image
+    command: --docker --docker.swarmMode --docker.watch --docker.network=traefik  # Tells Træfik to listen to docker
+    ports:
+      - "80:80"     # The HTTP port
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - ./acme.json:/acme.json
+      - ./.htpasswd:/.htpasswd
+    networks:
+      - traefik
+      - mgmt
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+      - target: 443
+        published: 443
+        mode: host
+    deploy:
+      mode: global
+      labels:
+        - "traefik.enable=true"
+        - "traefik.port=8080"
+        - "traefik.frontend.rule=Host:admin.pg.distillery.com"
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 20s
+
+networks:
+  mgmt:
+    driver: overlay
+  traefik:
+    driver: overlay
