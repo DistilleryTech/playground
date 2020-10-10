@@ -77,3 +77,23 @@ docker network create -d overlay traefik
 ```
 
 7. Download configuration
+
+```
+curl -LJO https://raw.github.com/DistilleryTech/playground/main/management/{management.yml,traefik.toml}
+```
+
+8. Update configuration
+
+Replace in management.yml
+
+- admin.pg.distillery.com with your domain name
+
+Replace in traefik.toml
+
+- your-name@distillery.com with your email. You will get notifications about Let's encrypt certificates on this address
+
+9. Deploy management stack
+
+```
+docker stack deploy --compose-file management.yml --prune  management
+```

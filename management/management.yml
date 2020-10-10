@@ -41,3 +41,4 @@ networks:
     driver: overlay
   traefik:
     driver: overlay
+    external: true
