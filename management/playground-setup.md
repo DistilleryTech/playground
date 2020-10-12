@@ -6,7 +6,7 @@ Get a VDS with lastest Ubuntu installed. This doc was tested on Ubuntu Server 20
 
 ```
 curl -LJO https://raw.github.com/DistilleryTech/playground/main/management/init.sh && \
-  chmod ./init.sh && \
+  chmod 700 ./init.sh && \
   ./init.sh
 ```
 

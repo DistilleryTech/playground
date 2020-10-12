@@ -19,9 +19,9 @@ mkdir -p /root/Playground/management && \
   cd /root/Playground/management && \
   htpasswd -cB .htpasswd traefik
 touch acme.json && chmod 600 acme.json
-docker network create -d overlay traefik
 curl -LJ --remote-name-all https://raw.github.com/DistilleryTech/playground/main/management/{management.yml,traefik.toml}
 
 ip a | grep 'inet\ '
 read -p 'Input your private network IP: ' privateip
 docker swarm init  --advertise-addr $privateip
+docker network create -d overlay traefik
