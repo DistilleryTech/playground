@@ -10,7 +10,7 @@ Swarmpit provides simple and easy to use interface for your Docker Swarm cluster
 curl -LJO https://raw.github.com/DistilleryTech/playground/main/swarmpit/swarmpit.yml
 ```
 
-2. Change swarmpit.pg.distillery.com to your domain
+2. Change `swarmpit.pg.distillery.com` to your domain
 
 3. Deploy stack
 
@@ -20,6 +20,4 @@ docker stack deploy --compose-file swarmpit.yml --prune  swarmpit
 
 4. Initialization
 
-```
-curl -X POST -H 'Content-Type: application/json' https://<YOUR-DOMAIN>/initialize -d '{"username": "admin", "password": "<YOUR-PASSWORD>"}'
-```
+Go to https://<YOUR-DOMAIN> and set admin user name and password
