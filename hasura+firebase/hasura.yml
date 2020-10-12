@@ -34,7 +34,7 @@ volumes:
   db_data:
 
 networks:
-    hasura:
+  hasura:
     driver: overlay
   traefik:
     driver: overlay
