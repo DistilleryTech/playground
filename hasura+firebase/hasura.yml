@@ -29,13 +29,12 @@ services:
         - "traefik.enable=true"
         - "traefik.port=8080"
         - "traefik.frontend.rule=Host:hasura.pg.distillery.com;PathPrefixStrip:/api"
-        - "swarmpit.service.deployment.autoredeploy=true"
 
 volumes:
   db_data:
 
 networks:
-  mgmt:
+    hasura:
     driver: overlay
   traefik:
     driver: overlay
