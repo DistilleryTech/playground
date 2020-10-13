@@ -1,0 +1,19 @@
+image: docker:stable
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  REGISTRY_IMAGE: registry.distillery.com/your-app-name
+  REGISTRY: registry.distillery.com
+
+before_script:
+  - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY
+
+build:
+  script:
+    - docker pull $REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $REGISTRY_IMAGE:latest --tag $REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $REGISTRY_IMAGE:latest .
+    - docker push $REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push $REGISTRY_IMAGE:latest
